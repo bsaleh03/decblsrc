@@ -106,7 +106,7 @@ stop = () => {
         }
         {//console.log(this.state.OGBlob)
         }
-        <button onClick={() => sendAudio(this.state.OGBlob, 1)}> SHIP </button>
+        <button onClick={() => sendAudio(this.state.OGBlob, 1)}> Post </button>
         </div>
         </Card.Text>
       </Card.Body>

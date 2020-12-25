@@ -61,12 +61,16 @@ render() {
       <Nav.Link href=" /feed">Feed</Nav.Link>
       :
       <a/>
-      }
-      <Nav.Link href="/popular">Popular posts</Nav.Link>
+      }<Nav.Link href="/popular">Popular posts</Nav.Link>
     </Nav>
     <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row'
+      }}>
+      <FormControl type="text" placeholder="Search" className="mr-sm-2" /> &nbsp;&nbsp;&nbsp;
       <Button onClick = {()=> alert("User search is coming soon™")} variant="outline-info">Search</Button>
+      </div>
     </Form>
     </Navbar.Collapse>
   </Navbar>

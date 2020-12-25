@@ -45,7 +45,7 @@ def register():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'password_confirm' in request.form and 'email' in request.form:
         details = request.form
         name = details['name']
-        uname = details['username']
+        uname = details['username'].lower().strip()
         email = details['email']
         password = details['password']
         cpassword = details['password_confirm']
@@ -108,7 +108,7 @@ def getPopPosts():
 @app.route('/api/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form: 
-        username = request.form['username'] 
+        username = request.form['username'].lower().strip()
         password = request.form['password'] 
         cur = mysql.connection.cursor()
         cur.execute("SELECT idUsers, Password, UserName FROM USERS WHERE UserName = %s", [username])

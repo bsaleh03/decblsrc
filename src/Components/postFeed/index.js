@@ -76,11 +76,11 @@ class Postfeed extends React.Component {
     })
     .then(response => response.json())
     .then(data => {
+          window.location.reload()
     })
     .catch(error => {
-      console.log(error)
+      alert("you need to sign in to do that")
     })
-    window.location.reload()
   }
 
   delete = (postid) => {

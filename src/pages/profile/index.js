@@ -108,7 +108,7 @@ class Profile extends React.Component {
           window.location.reload()
         })
         .catch(error => {
-          alert(error)
+          alert("you need to sign in to do that")
         })
       }
 

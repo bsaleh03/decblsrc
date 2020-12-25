@@ -65,7 +65,7 @@ class Popular extends React.Component {
         window.location.reload()
     })
     .catch(error => {
-      console.log(error)
+      alert("you need to sign in to do that")
     })
     
   }

@@ -88,7 +88,7 @@ class Popular extends React.Component {
         return(
             <div className="App">
                 <NavBar/>
-          <img style={{ width: '30rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>
+          <img style={{ width: '24rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>
           </div>
         );
     } else {
@@ -100,7 +100,7 @@ class Popular extends React.Component {
       
       console.log(n)
     return(
-      <Card style={{ width: '30rem', margin: "auto" }} body> 
+      <Card style={{ width: '24rem', margin: "auto" }} body> 
       <a href={"/profile/" + n[2]}>
         <Card.Title style={{color: "black"}}>{n[1]}{
       n[6]?

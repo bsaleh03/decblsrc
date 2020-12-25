@@ -148,11 +148,11 @@ class Profile extends React.Component {
           <div>
       <NavBar/>
     {(this.state.pfData === null  || this.state.pfData === undefined)?  
-          <img  style={{ width: '30rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>    
+          <img  style={{ width: '24rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>    
    :
       <div className="App">
     <body>
-    <Card body style={{ width: '30rem', margin: "auto" }}>
+    <Card body style={{ width: '100%', margin: "auto" }}>
     <Card.Title style={{color: "black"}}>{this.state.pfData[0]}{
       this.state.pfData[3]?
       <CheckCircle/>
@@ -213,12 +213,12 @@ class Profile extends React.Component {
       </div>
     }
 {(this.state.externalData === null  || this.state.externalData === undefined)?  
-          <img style={{ width: '30rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>    
+          <img style={{ width: '24rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>    
    :
    this.state.externalData.map((n) => {
       
   return(
-    <Card body style={{ width: '30rem', margin: "auto" }}> 
+    <Card body style={{ width: '24rem', margin: "auto" }}> 
     <a href={"/profile/" + n[2]}>
       <Card.Title style={{color: "black"}}>{n[1]}{
     n[6]?

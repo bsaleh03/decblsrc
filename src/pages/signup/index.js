@@ -81,7 +81,7 @@ function Signup() {
   </header>*/}
   <body>
       {register? 
-      <Form onSubmit={handleOnRegisterSubmit} style={{ width: '30rem', margin: "auto" }}>
+      <Form onSubmit={handleOnRegisterSubmit} style={{ width: '24rem', margin: "auto" }}>
           <Form.Group controlId="formGroupName">
               <Form.Label>Name</Form.Label>
               <Form.Control type="name" placeholder="Enter name" name="name" />
@@ -106,12 +106,12 @@ function Signup() {
                 Submit
             </Button>
             {serverState.status && (
-                <p style={{ width: '30rem', margin: "auto" }} className={!serverState.status.ok ? "errorMsg" : ""}>
+                <p style={{ width: '24rem', margin: "auto" }} className={!serverState.status.ok ? "errorMsg" : ""}>
                 {serverState.status.msg}</p>
             )}
       </Form>
       :
-      <Form onSubmit={handleOnLoginSubmit} style={{ width: '30rem', margin: "auto" }}>
+      <Form onSubmit={handleOnLoginSubmit} style={{ width: '24rem', margin: "auto" }}>
           <Form.Group controlId="formGroupUserName">
               <Form.Label>User Name</Form.Label>
               <Form.Control type="username" placeholder="Enter username" name="username" />
@@ -130,9 +130,9 @@ function Signup() {
       </Form>
 }
         {register? 
-        <div style={{ width: '30rem', margin: "auto" }}><a>Already on Decbl? </a> <a style={{color:"blue"}} onClick={() => setRegister(!register)}> Sign in.</a></div>
+        <div style={{ width: '24rem', margin: "auto" }}><a>Already on Decbl? </a> <a style={{color:"blue"}} onClick={() => setRegister(!register)}> Sign in.</a></div>
         :
-        <div style={{ width: '30rem', margin: "auto" }}>
+        <div style={{ width: '24rem', margin: "auto" }}>
         <a >Don't have an account yet?</a> <a style={{color:"blue"}} onClick={() => setRegister(!register)}> Create one now!</a> <br/>
         <a style={{color:"blue"}} onClick={() => alert("That sounds like a you problem")}>Forgot your password?</a></div>}
     

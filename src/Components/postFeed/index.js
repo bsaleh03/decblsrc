@@ -105,7 +105,7 @@ class Postfeed extends React.Component {
     if(this.state.externalData === null || this.state.externalData === undefined) {
       console.log(this.state.externalData)
         return(
-          <img style={{ width: '30rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>
+          <img style={{ width: '24rem', margin: "auto" }} src={spinner} className='loading-icon' alt="logo"/>
         );
     } else {
       return(
@@ -115,7 +115,7 @@ class Postfeed extends React.Component {
       
       console.log(this.state.userName)
     return(
-      <Card style={{ width: '30rem', margin: "auto" }} body> 
+      <Card style={{ width: '24rem', margin: "auto" }} body> 
       <a href={"/profile/" + n[2]}>
         <Card.Title style={{color: "black"}}>{n[1]}{
       n[6]?

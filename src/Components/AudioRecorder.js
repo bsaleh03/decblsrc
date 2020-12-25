@@ -91,7 +91,7 @@ stop = () => {
 
   render() {
     return (
-      <Card style={{ width: '30rem', margin: 'auto' }}>
+      <Card style={{ width: '24rem', margin: 'auto' }}>
       <Card.Body>
         <Card.Subtitle className="mb-2 text-muted">Say Something</Card.Subtitle>
         <Card.Text>

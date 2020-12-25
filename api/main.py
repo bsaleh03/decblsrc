@@ -4,11 +4,13 @@ from flask import Flask, render_template, request, jsonify
 from flask_mysqldb import MySQL
 import base64
 import re
+from flask_cors import CORS
 from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_identity, JWTManager, jwt_optional)
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
+CORS(app)
 
 app.config['JWT_SECRET_KEY'] = b'M\xb84B\x03IA\xe3\xfcj\xa0\xa4T\xfb\xac\xf0'
 jwt = JWTManager(app)
@@ -57,6 +59,12 @@ def register():
             cur = mysql.connection.cursor()
             cur.execute("INSERT INTO USERS(Name, UserName, email, Password) VALUES (%s, %s, %s, %s)", (name, uname, email, generate_password_hash(password, "sha256")))
             mysql.connection.commit()
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT idUsers FROM USERS WHERE UserName = %s", [uname])
+            data = cur.fetchone()
+            print(data[0])
+            cur.execute("INSERT INTO RELATIONSHIPS (Users_idfollowed, Users_idfollowing) VALUES (%s, %s)", (data[0],data[0]))
+            mysql.connection.commit()
             return "ok", 201
         except Exception as err:
             print(err)
@@ -71,22 +79,28 @@ def register():
     
 @app.route('/api/popularposts')
 def getPopPosts():
-    cur = mysql.connection.cursor()
-    user = get_jwt_identity()
-    cur.execute('''SELECT u.idUsers, u.Name, u.UserName, p.content, p.Users_idUsers, p.idPosts, u.verified from POSTS p
-LEFT JOIN USERS u ON u.idUsers = p.Users_idUsers ''')
-    data = cur.fetchall()
+    try:
+        cur = mysql.connection.cursor()
+        user = get_jwt_identity()
+        cur.execute('''SELECT u.idUsers, u.Name, u.UserName, p.content, p.Users_idUsers, p.idPosts, u.verified from POSTS p
+        LEFT JOIN USERS u ON u.idUsers = p.Users_idUsers ''')
+        data = cur.fetchall()
+    except Exception as err:
+            return {'success': False ,'error': str(err)}, 400
     if not data:
         return  {'success': False ,'error': "No posts to send"}, 400
     l = list()
     for n in range(len(data)):
         l.append(list(data[n]))
         l[n][3] = base64.b64encode(l[n][3]).decode('utf-8')
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT COUNT(Posts_idPosts) FROM LIKES WHERE Posts_idPosts = %s", [l[n][5]])
-        cnt = cur.fetchone()
-        l[n].append(cnt)
-        l.sort(key=lambda x: x[7], reverse=True)
+        try: 
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT COUNT(Posts_idPosts) FROM LIKES WHERE Posts_idPosts = %s", [l[n][5]])
+            cnt = cur.fetchone()
+            l[n].append(cnt)
+        except Exception as err:
+            return {'success': False ,'error': str(err)}, 400
+    l.sort(key=lambda x: x[7], reverse=True)
     #print(l[0][3])
     encoded = tuple(l)
     return {'users': encoded}
@@ -115,11 +129,13 @@ def uploadPost():
     details = request.form
     try:
         user = get_jwt_identity()
+        
         audioFile = request.files['audio']
         userID = details['userID']
         #print(audioFile.read())
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO POSTS(Users_idUsers, content) VALUES (%s, %s)", (user, audioFile.read()))
+        x = audioFile.read()
+        cur.execute("INSERT INTO POSTS(Users_idUsers, content) VALUES (%s, %s)", (user, x))
         mysql.connection.commit()
         return {'success': True}, 201
     except Exception as e:
@@ -186,6 +202,28 @@ def likePost():
             else:
                 cur.execute("DELETE FROM LIKES WHERE Users_idUsers = %s AND Posts_idPosts = %s", (user, idPosts))
             mysql.connection.commit()
+            return {'success': True}, 201
+        except Exception as err:
+            print(e)
+            return {'error': str(err)},400
+
+
+@app.route('/api/delete', methods=['POST'])
+@jwt_required
+def deletePost():
+    if request.method == 'POST':
+        details = request.form
+        try:
+            idPosts = details['idPosts']
+            user = get_jwt_identity()
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT Users_idUsers FROM POSTS WHERE Posts_idPosts = %s", [idPosts])
+            data = cur.fetchall()
+            if data[0] == user:
+                cur.execute("DELETE FROM POSTS WHERE Posts_idPosts = %s", [idPosts])
+                mysql.connection.commit()
+            else:
+                return {'error': "User is not authorized to delete this post"}, 401
             return {'success': True}, 201
         except Exception as err:
             print(e)
@@ -266,9 +304,9 @@ def getPostsPF(name):
     l = list()
     for n in range(len(data)):
         l.append(list(data[n]))
+        print(data[n][3])
         l[n][3] = base64.b64encode(l[n][3]).decode('utf-8')
         cur = mysql.connection.cursor()
-        print(type(l[n][5]))
         cur.execute("SELECT COUNT(Posts_idPosts) FROM LIKES WHERE Posts_idPosts = %s", [l[n][5]])
         cnt = cur.fetchone()
         l[n].append(cnt)
@@ -284,5 +322,8 @@ def get_current_time():
     return {'time': time.time()}
 
 port = int(os.environ.get('PORT', 8080))
+if not port: 
+    port = 8080
+    
 if __name__ == '__main__':
     app.run(threaded=True, host='0.0.0.0', port=port)

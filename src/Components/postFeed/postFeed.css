@@ -1,0 +1,23 @@
+.loading-icon {
+    height: 40vmin;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+@media (prefers-reduced-motion: no-preference) {
+  .loading-icon {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(3600deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+  
+}

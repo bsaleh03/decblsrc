@@ -6,17 +6,28 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "gh-pages": "^3.1.0",
+    "mic-recorder-to-mp3": "^2.2.2",
     "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-bootstrap-icons": "^1.1.0",
     "react-dom": "^17.0.1",
+    "react-mic": "^12.4.6",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-voice-recorder": "^2.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "cd api && venv/bin/flask run --no-debugger",
+    "start-api": "cd api && venv/Scripts/flask run --no-debugger",
+    "deploy": "yarn build && gh-pages -d public -b main -r https://4019d02ec0eaf465a86167ca60b8bd916dd62190@github.com/bsaleh03/decbl",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+
   },
   "eslintConfig": {
     "extends": [
@@ -36,5 +47,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "homepage": "https://bsaleh03.github.io/decbl"
 }

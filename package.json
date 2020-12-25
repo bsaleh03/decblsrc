@@ -22,8 +22,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "cd api && venv/Scripts/flask run --no-debugger",
-    "deploy": "yarn build && gh-pages -d public -b main -r https://4019d02ec0eaf465a86167ca60b8bd916dd62190@github.com/bsaleh03/decbl",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
